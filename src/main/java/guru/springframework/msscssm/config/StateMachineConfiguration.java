@@ -97,29 +97,18 @@ public class StateMachineConfiguration extends StateMachineConfigurerAdapter<Pay
     public Action<PaymentState, PaymentEvent> authorizeAction() {
         return stateContext -> {
             System.out.println("authorizeAction is called!");
-            if (new Random().nextInt(10) < 1) {
-                System.out.println("Approved!");
-                stateContext.getStateMachine().sendEvent(MessageBuilder.withPayload(PaymentEvent.AUTH_APPROVED)
-                        .setHeader(PAYMENT_ID_HEADER, stateContext.getMessageHeader(PAYMENT_ID_HEADER))
-                        .build());
-            } else {
-                System.out.println("Declined!");
-                stateContext.getStateMachine().sendEvent(MessageBuilder.withPayload(PaymentEvent.AUTH_DECLINED)
-                        .setHeader(PAYMENT_ID_HEADER, stateContext.getMessageHeader(PAYMENT_ID_HEADER))
-                        .build());
-            }
         };
     }
 
     private Action<PaymentState, PaymentEvent> preAuthDeclinedAction() {
         return stateContext -> {
-            System.out.println("preAuthDeclinedAction!! do something!!");
+            System.out.println("preAuthDeclinedAction is called !! do something!!");
         };
     }
 
     private Action<PaymentState, PaymentEvent> authDeclinedAction() {
         return stateContext -> {
-            System.out.println("authDeclinedAction!! do something!!");
+            System.out.println("authDeclinedAction is called!! do something!!");
         };
     }
 }

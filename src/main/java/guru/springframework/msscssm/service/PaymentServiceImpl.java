@@ -27,7 +27,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final StateMachineFactory<PaymentState, PaymentEvent> stateMachineFactory;
     private final PaymentStateChangeInterceptor paymentStateChangeInterceptor;
 
-    public static final String PAYMENT_ID_HEADER = "payemnt_id";
+    public static final String PAYMENT_ID_HEADER = "payment";
 
     @Transactional
     @Override
@@ -70,7 +70,7 @@ public class PaymentServiceImpl implements PaymentService {
         Message message = MessageBuilder.withPayload(event)
                 .setHeader(PAYMENT_ID_HEADER, paymentId)
                 .build();
-        sm.sendEvent(message);
+        sm.sendEvent(message); // StateMachine send event to change State
     }
 
     private StateMachine<PaymentState, PaymentEvent> build(Long paymentId) {

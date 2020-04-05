@@ -30,9 +30,9 @@ public class PaymentStateChangeInterceptor extends StateMachineInterceptorAdapte
     public void preStateChange(State<PaymentState, PaymentEvent> state, Message<PaymentEvent> message,
                                Transition<PaymentState, PaymentEvent> transition, StateMachine<PaymentState, PaymentEvent> stateMachine) {
 
-        System.out.println("New State: " + state.getId());
+        System.out.println("New State: " + state.getId() + " Message: " + message);
         Optional.ofNullable(message).ifPresent(msg -> {
-            Optional.ofNullable(Long.class.cast(msg.getHeaders().getOrDefault(PAYMENT_ID_HEADER, -1L)))
+            Optional.ofNullable((Long) msg.getHeaders().getOrDefault(PAYMENT_ID_HEADER, -1L))
                     .ifPresent(paymentId -> {
                         Payment payment = paymentRepository.getOne(paymentId);
                         payment.setState(state.getId());
